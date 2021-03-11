@@ -4,7 +4,7 @@ import '../styles/tasklist.scss';
 
 
 
-interface Task {
+interface Task { //Tipo de dado que o objeto Task recebe
   id: number;
   title: string;
   isComplete: boolean;
@@ -12,24 +12,25 @@ interface Task {
 
 export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [newTaskTitle, setNewTaskTitle] = useState('');
+  const [newTaskTitle, setNewTaskTitle] = useState('');//Desestruturação da variavel
 
   function handleCreateNewTask() {
-    // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
-    if(!newTaskTitle) return;
+    // Criando uma nova task com um id random, sem permitir a criação caso o título seja vazio.
+    if(!newTaskTitle) return;//Negando a criação de uma atividade com input vazio
     const newTask = {
-      id: Math.random(),
+      id: Math.random(),//Criando um id randomicamente para atividades criadas, não use Math.random()
+      // para nada relacionado a segurança, Math.random() não gera números criptograficamente seguros
       title: newTaskTitle,
-      isComplete: false,
+      isComplete: false,//Atividade começa seu estado como não concluida
     }
 
-    setTasks(oldState => [...oldState, newTask])
-    setNewTaskTitle('');
+    setTasks(oldState => [...oldState, newTask])//Setando uma nova atividade (valor) ao array
+    setNewTaskTitle('');//Input retorna a ser vazio após execução de criação
   }
 
   function handleToggleTaskCompletion(id: number) {
     // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
-    const newTasks = tasks.map(task => task.id === id ? {
+    const newTasks = tasks.map(task => task.id === id ? {//Mapeando as tasks pelo id
       ...task,
       isComplete: !task.isComplete
     } : task)
@@ -40,7 +41,7 @@ export function TaskList() {
   function handleRemoveTask(id: number) {
     // Remova uma task da listagem pelo ID
 
-    const filteredTasks = tasks.filter(task => task.id !== id);
+    const filteredTasks = tasks.filter(task => task.id !== id);//Filtrando tasks 
 
     setTasks(filteredTasks)
   }
